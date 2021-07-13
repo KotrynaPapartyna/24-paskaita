@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24 paskaita</title>
+</head>
+<body>
+    
+    <div class="trupmena">
+        <input type="text" id="sveikojiDalis" name="sveikojiDalis">
+        <input type="text" id="skaitiklis" name="skaitiklis">
+        <input type="text" id="vardiklis" name="vardiklis">
+    </div>
+
+    <div class="trupmena1">
+        <input type="text" id="sveikojiDalis1" name="sveikojiDalis1">
+        <input type="text" id="skaitiklis1" name="skaitiklis1">
+        <input type="text" id="vardiklis1" name="vardiklis1">
+    </div>
+
+    <button class="skaiciuok">skaiciuoti</button>
+    
+    <input type="text" id="rezultatas" disabled="true"/>
+
+    <script>
+
+        "use strict"
+        //objektai 
+        //kaip pvz objekto nustatymas- zmogus arba automobilis
+        //objektai apibudinami pagal ju pvz funkcija
+        //savybes arba funkcojos priskiriamos objektui
+
+        var kintamasis=5;
+        var tekstas="tekstas"
+
+        //objektui apibudinti- {sklaustai- parodo kad tai objektas} kintamasis aprasomas kaip pbjektas
+        var zmogus= { 
+        // savybes
+            vardas: "vardenis", //"reksme", objekto kintamasis
+            pavarde: "pavardenis",
+            amzius: 35,
+        };
+
+        var zmogus1= { 
+        // savybes
+            vardas: "vardenis",
+            "vardas-kategorizuota": "vardenis1", //"reiksme"
+            pavarde: "pavardenis1",
+            amzius: 37,
+        };
+
+        console.log (zmogus);
+        console.log (zmogus1);
+    
+        // savybes (kintamojo vardas) issivedami atskirai- objekto pavadinimas ir per .savybe
+        //console.log (zmogus.vardas);
+        //console.log (zmogus.pavarde);
+        //console.log (zmogus.amzius);
+
+       // console.log (zmogus1["vardas-kategorizuota"]);
+
+        //kitas issivedimo budas- masyve- lauztiniai skliaustai ir ""
+        //console.log (zmogus["vardas"]);
+        //console.log (zmogus["pavarde"]);
+        //console.log (zmogus["amzius"]);
+
+        //console.log (zmogus1.vardas);
+        //console.log (zmogus1.pavarde);
+        //console.log (zmogus1.amzius);
+
+        //objekto kintamajam priskiriama kita reiksme. galima keisti
+        zmogus.vardas="pakeistas";
+        zmogus.pavarde="pakeista pavarde";
+        zmogus.amzius="80";
+
+        zmogus1.vardas="pakeistas vardas";
+
+        //sugalvojamas naujas kintamasis su reiksme- atsiranda objekte issivedus i konsole
+        zmogus.asmensKodas="2324424";
+        zmogus1["asmensKodas"]="57489884";
+
+        //galima antram priskirti pirmojo reiksme pakeiciant taip: 
+        //var ir let- is esmes tas pats (apibrezia kintamaji)
+        var tekstas1="tekstas";
+            zmogus.asmensKodas=tekstas1;
+            zmogus1.asmensKodas=zmogus.asmensKodas;
+
+
+        console.log (zmogus);
+        console.log (zmogus1);
+
+        //sukuriamas metodas prisistatymui. funkcija objekto viduje, 
+        //grazinamas (return) Prisistatoma: vardas ir pavarde
+        var zmogus2={
+            vardas: "vardenis2",
+            pavarde: "pavardenis2",
+            amzius:39, 
+            prisistatyk:  function() {
+                var vardasPavarde=this.vardas + " ir " + this.pavarde;//"tarpas", gali buti tekstas
+                return vardasPavarde; 
+            }, 
+        
+            //nepamirst padet kablelio po lauztiniais skliaustais
+            perdavimas: function(skaicius) {
+                return skaicius*2;
+            },
+        
+            isvesk: function() {
+                console.log(this.vardas + " " + this.pavarde);
+            }
+        }
+
+         //funkcija veika tik ja iskvietus. reikia funkcijos pavadinimo-prisistatyk- 
+         console.log ( zmogus2.prisistatyk() );
+         console.log ( zmogus2.perdavimas(80) );
+
+         zmogus2.isvesk();
+    
+        //dvieju trupemenu sudetis.
+
+        document.querySelector(".skaiciuok").addEventListener("click", function() {
+            var sveikojiDalis=parseFloat(document.querySelector("#sveikojiDalis").value);
+            var skaitiklis=parseFloat(document.querySelector("#skaitiklis").value);
+            var vardiklis=parseFloat(document.querySelector("#vardiklis").value);
+            var sveikojiDalis1=parseFloat(document.querySelector("#sveikojiDalis1").value);
+            var skaitiklis1=parseFloat(document.querySelector("#skaitiklis1").value);
+            var vardiklis1=parseFloat(document.querySelector("#vardiklis1").value);
+
+            
+
+            var trupmena = {
+                sveikojiDalis:4,
+                vardiklis:10,
+                skaitiklis: 50,
+                    // dar vienas metodas apsirasyti 
+                    //skaitiklis: skaitiklis,
+                    //vardiklis:vardiklis, 
+                    //sveikojiDalis: sveikojiDalis, 
+             //skaitiklis: skaitiklis,
+             //vardiklis:vardiklis, 
+             //objekto viduje pasikeicia i netaisyklinga
+
+             paleidimas: function(sveikojiDalis, skaitiklis, vardiklis) {
+                this.sveikojiDalis=sveikojiDalis;
+                this.skaitiklis=skaitiklis;
+                this.vardiklis=vardiklis;
+
+             },
+
+             virskNetaisyklinga: function(){
+                 if(this.sveikojiDalis>0 || this.skaitiklis>this.vardiklis) {
+                     this.skaitiklis=this.sveikojiDalis*this.vardiklis+this.skaitiklis;
+                     this.sveikojiDalis=0;
+                 }
+             },
+             //objekto viduje pasikeicia i taisyklinga
+             virskTaisyklinga: function() {
+                 this.sveikojiDalis=parseInt(this.skaitiklis/this.vardiklis)
+                 this.skaitiklis=this.skaitiklis%this.vardiklis
+             },
+             //perduoti nieko nereikia
+             susipaprastink: function(){
+                var a= this.skaitiklis; 
+                var b= this.vardiklis;
+            
+            while (a > 0 && b > 0) {
+                if (a > b) {
+                    a = a % b;  
+                } else {
+                    b= b % a;  
+            }
+        }
+            var dbd= a+b;
+
+            this.skaitiklis/=dbd;
+            this.vardiklis/=dbd;
+
+            }
+        }
+
+            var trupmena1 = {
+                sveikojiDalis: 4,
+                vardiklis: 10,
+                skaitiklis:50,
+                // dar vienas metodas apsirasyti 
+                //sveikojiDalis: sveikojiDalis1, 
+                //skaitiklis: skaitiklis1,
+                // vardiklis:vardiklis1, 
+
+
+            paleidimas: function(sveikojiDalis, skaitiklis, vardiklis) {
+                this.sveikojiDalis=sveikojiDalis;
+                this.skaitiklis=skaitiklis;
+                this.vardiklis=vardiklis;
+
+             }, 
+
+             virskNetaisyklinga: function(){
+                 if(this.sveikojiDalis>0 || this.skaitiklis>this.vardiklis) {
+                     this.skaitiklis=this.sveikojiDalis*this.vardiklis+this.skaitiklis;
+                     this.sveikojiDalis=0;
+                 }
+             },
+        
+            virskTaisyklinga: function() {
+                 this.sveikojiDalis=parseInt(this.skaitiklis/this.vardiklis)
+                 this.skaitiklis=this.skaitiklis%this.vardiklis
+             },
+            susipaprastink: function(){
+                var a= this.skaitiklis; 
+                var b= this.vardiklis;
+            
+            while (a > 0 && b > 0) {
+                if (a > b) {
+                    a = a % b;  
+                } else {
+                    b= b % a;  
+            }
+        }
+            var dbd= a+b;
+
+            this.skaitiklis/=dbd;
+            this.vardiklis/=dbd;
+            
+            }
+        }
+         
+
+        // pasidarom dvi trupmenas +
+        // verciam jas i netaisyklingas +     
+         // bendravardiklinti+
+         // sudeti
+         // sukurti funkcija, kuri supaprastina trupmena
+
+         trupmena.paleidimas(sveikojiDalis, skaitiklis, vardiklis);
+         trupmena1.paleidimas(sveikojiDalis1, skaitiklis1, vardiklis1);
+
+         trupmena.virskNetaisyklinga();
+         trupmena1.virskNetaisyklinga();
+
+         //supaprastinimo funkcija padaroma anksciau, pries subendravardiklinant
+         trupmena.susipaprastink();
+         trupmena1.susipaprastink();
+
+
+         //SKAITIKLIS- skaitikliu reiksmes
+         trupmena.skaitiklis=trupmena.skaitiklis*trupmena1.vardiklis;
+         trupmena1.skaitiklis=trupmena1.skaitiklis*trupmena.vardiklis;
+
+         //VARDIKLIS abeju trupmenu sandauga- gaunamas bendras vardiklis
+         trupmena.vardiklis=trupmena.vardiklis*trupmena1.vardiklis;
+         trupmena1.vardiklis=trupmena.vardiklis;
+
+
+            //objekto reiksmiu priskyrimas
+           // trupmena.sveikojiDalis=sveikojiDalis;
+           // trupmena.skaitiklis=skaitiklis;
+            //trupmena.vardiklis=vardiklis;
+
+            //trupmena1.sveikojiDalis=sveikojiDalis1;
+            //trupmena1.skaitiklis=skaitiklis1;
+            //trupmena1.vardiklis=vardiklis1;
+
+
+
+         var trupmenuSuma = {
+             sveikojiDalis: 0, 
+             skaitiklis: 0,
+             vardiklis:0, 
+            virskNetaisyklinga: function(){
+                 if(this.sveikojiDalis>0 || this.skaitiklis>this.vardiklis) {
+                     this.skaitiklis=this.sveikojiDalis*this.vardiklis+this.skaitiklis;
+                     this.sveikojiDalis=0;
+                 }
+             },
+        
+            virskTaisyklinga: function() {
+                 this.sveikojiDalis=parseInt(this.skaitiklis/this.vardiklis);
+                 this.skaitiklis=this.skaitiklis%this.vardiklis;
+             },
+             susipaprastink: function(){
+                var a= this.skaitiklis; 
+                var b= this.vardiklis;
+            
+            while (a > 0 && b > 0) {
+                if (a > b) {
+                    a = a % b;  
+                } else {
+                    b= b % a;  
+            }
+        }
+            var dbd= a+b;
+
+            this.skaitiklis/=dbd;
+            this.vardiklis/=dbd;
+
+            }
+        }
+
+         trupmenuSuma.skaitiklis=trupmena.skaitiklis+trupmena1.skaitiklis;
+         trupmenuSuma.vardiklis=trupmena.vardiklis;
+         //gali buti ir:
+         trupmenuSuma.vardiklis=trupmena1.vardiklis;
+
+
+         console.log(trupmena);
+         console.log(trupmena1);
+
+         // komanda trupmenu sumai- virsti taisyklinga. bet taska ir su ()
+         trupmenuSuma.virskTaisyklinga();
+         trupmenuSuma.susipaprastink();
+
+         console.log(trupmenuSuma);   
+
+
+        });
+
+        //objekte eilutes baigiasi , o ne ; objektai ir saybes atskiriami taip
+        //var trupmena= [1,1,2]; apsirasoma kaip OBJEKTAS
+
+         //1. trupmena - apsirasoma kaip objektas 
+        //  ||- arba
+        // this- galioja tik skliausteliuose {}, uz ju- neveikia/ 
+        
+           
+
+
+
+
+    </script>
+    
+</body>
+</html>
